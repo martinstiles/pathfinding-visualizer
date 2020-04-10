@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import PathFinding from './views/pathFinding/pathFinding.js'
 
 function App() {
+
+  const algorithmStyle = {
+    //textAlign: 'center',
+    display: 'table',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
+  const test = () => {
+    console.log('oppdaterer det?')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <div style={algorithmStyle}>
+        <h1>
+          HERE COMES THE BUTTONS :D
+        </h1>
+        <PathFinding />
+      </div>
+      <button onClick={test}> </button>
+    </>
   );
 }
 
