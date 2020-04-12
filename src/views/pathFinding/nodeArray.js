@@ -1,73 +1,55 @@
-import React, { useState, useMemo } from 'react'
-import Node from './nodee.js'
+import React, { useState, useEffect } from 'react'
+import Node from './node.js'
+import ButtonGroup from '../buttonGroup.js'
+import getInitialNodes from './initialNodes.js'
 
-
-const initializeNodes = (hooks) => {
-  const numRows = 21
-  const numCols = 50
-  const nodes = []
-
-  // Initialize the nodes
-  var key = 0
-  for (let row = 0; row < numRows; row++) {
-    const currentRow = []
-    for (let col = 0; col < numCols; col++) {
-      var type = 'unvisited'
-      if (row === 10 && col === 4) { type = 'source' }
-      if (row === 10 && col === 44) {type = 'goal'}
-      currentRow.push([
-        <Node key={key} type={type} hooks={hooks}/>
-      ])
-      key++
-    }
-    nodes.push(currentRow)
-  }
-  console.log('reset')
-  return nodes
-}
 
 const NodeArray = () => {
+  const [nodes, setNodes] = useState([])
   const [isMouseDownInArray, setIsMouseDownInArray] = useState(false)
-  /*var isMouseDownInArray = false
-  const setIsMouseDownInArray = (boolean) => {
-    isMouseDownInArray = boolean
-  } */
-
-  const [runningState, setRunningState] = useState('empty') // empty, cusomized, running, finished
+  const [runState, setRunState] = useState('empty') // empty, cusomized, running, finished
   const hooks = {
     isMouseDownInArray,
     setIsMouseDownInArray,
-    runningState,
-    setRunningState
+    runState,
+    setRunState
   }
 
-  // Is all of this really necessary?? --> let nodes = initializeNodes(hooks)
-  const nodes = useMemo(() => {
-    //console.log('Init')
-    return initializeNodes(hooks)
-  }, [hooks])
+  // basicly componentDidMount()
+  useEffect(() => {
+    const initialNodes = getInitialNodes()
+    setNodes(initialNodes)
+  }, [])
 
-  const reset = () => {
-    let c = 0
-    nodes.map((row, rowIndex) => 
-      row.map((col, colIndex) => {
-        console.log(nodes[rowIndex][colIndex])
-        nodes[rowIndex][colIndex] = <Node type={'unvisited'} hooks={hooks}/>
-        c++}
-      )
-    )
-    //console.log('DONE: ' + c)
+  const setTypeInNode = (type, coordinates) => {
+    const row = coordinates[0]
+    const col = coordinates[1]
+    nodes[row][col][0].type = type
   }
 
-  console.log(nodes)
+  const resetNodes = () => {
+    const initialNodes = getInitialNodes() // clears the grid
+    setNodes(initialNodes)
+    setRunState('empty')
+  }
+  //console.log(nodes)
+  
   return (
     <div>
-        {nodes.map((row, rowIndex) => {
-          return <div style={{display: 'flex', flexDirection: 'row'}}>
-            {row.map((col, colIndex) => nodes[rowIndex][colIndex])}
-          </div>
-        })}
-        <button onClick={reset}> TEST </button>
+      <ButtonGroup runState={runState} resetNodes={resetNodes} />
+      {nodes.map((row, rowIndex) => {
+        return <div key={rowIndex} style={{display: 'flex', flexDirection: 'row'}}>
+          {row.map((node, colIndex) =>
+            <Node
+              key={node[0].key}
+              type={node[0].type}
+              hooks={hooks}
+              setTypeInNode={setTypeInNode}
+              coordinates={[rowIndex, colIndex]}
+            />
+          )}
+        </div>
+      })}
     </div>
   )
 }

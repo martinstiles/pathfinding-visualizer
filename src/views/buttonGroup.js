@@ -1,13 +1,11 @@
 import React from 'react'
 import { Button, FormControl, InputLabel, Select, MenuItem, Menu, Link } from '@material-ui/core'
-import './styles.css'
 import ReplayIcon from '@material-ui/icons/Replay'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline'
-import { NodesProvider } from './pathFinding/node.js'
 
-const ButtonGroup = () => {
+const ButtonGroup = (props) => {
   const style = {
     marginBottom: '2em',
     display: 'flex',
@@ -21,6 +19,11 @@ const ButtonGroup = () => {
     textAlign: 'left'
   }
 
+  // run states:
+  const isEmpty = props.runState === 'empty'
+  const isCustomized = props.runState === 'customized'
+  const isRunning = props.runState === 'running'
+
   const [algorithm, setAlgorithm] = React.useState('')
   const handleAlgorithmChange = (event) => {
     setAlgorithm(event.target.value);
@@ -33,8 +36,6 @@ const ButtonGroup = () => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const handleMoreClose = () => { setAnchorEl(null) }
   const handleMoreClick = (event) => { setAnchorEl(event.currentTarget) }
-
-  console.log(NodesProvider.getRunningState())
 
   return (
     <div style={style}>
@@ -61,11 +62,18 @@ const ButtonGroup = () => {
         </Select>
       </FormControl>
 
-      <Button style={{marginLeft: '2em', color: 'black', backgroundColor: algorithm !== '' ? '#63C132' : 'gray'}} variant="contained" disabled={algorithm === ''}>
+      <Button
+        style={{marginLeft: '2em', color: 'black', backgroundColor: algorithm !== '' ? '#63C132' : 'gray'}} 
+        ariant="contained"
+        disabled={algorithm === '' || isRunning}>
         <PlayArrowIcon />
       </Button>
-      <Button style={{marginLeft: '1em', color: 'black', backgroundColor: !true  ? '#cf2e2e' : 'gray'}} variant="contained" color="secondary" disabled={NodesProvider.getRunningState() === 'empty'}>
-        <HighlightOffIcon />
+      <Button
+        style={{marginLeft: '1em', color: 'black', backgroundColor: isCustomized ? '#cf2e2e' : 'gray'}}
+        variant="contained"
+        disabled={isEmpty}
+        onClick={props.resetNodes}>
+        { isEmpty || isCustomized ? <HighlightOffIcon /> : <ReplayIcon /> }
       </Button>
       </div>
       <div style={{display: 'flex', flexDirection: 'row', fontSize: '3em'}}>
