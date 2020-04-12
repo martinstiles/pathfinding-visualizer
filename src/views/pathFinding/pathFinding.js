@@ -1,49 +1,44 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { NodesProvider } from './node.js'
+import ButtonGroup from '../buttonGroup.js'
+import NodeArray from './nodeArray.js'
 
-
-const pathFinding = () => {
-  const nodes = NodesProvider.nodes
-
-  const test = () => {
-    console.log('oppdaterer det?')
-  }
-
+export const PathFinding = () => {
   return (
-    <div>
-      {nodes.map((row, rowIndex) => {
-        return <div style={{display: 'flex', flexDirection: 'row'}}>
-          {row.map((col, colIndex) => nodes[rowIndex][colIndex].nodeElement)}
-        </div>
-      })}
-    </div>
+    <>
+      <ButtonGroup />
+      <NodeArray />
+    </>
   )
 }
 
 
 
-
-
-
-export class PathFinding extends Component {
-  nodes = NodesProvider.nodes
-  test = () => {
-    console.log(this.nodes)
-    this.forceUpdate()
+const BathFinding = () => {
+  const [nodes, setNodes] = useState(NodesProvider.nodes)
+  const resetOnClick = () => {
+    console.log(1)
+    console.log(nodes)
+    console.log(2)
+    setNodes(NodesProvider.reset())
+    console.log('reseting')
+    console.log(nodes)
   }
 
-  render() {
-    return (
-      <div>
-        {this.nodes.map((row, rowIndex) => {
+
+  console.log((nodes))
+  return (
+    <div style={{marginTop: '0em'}}>
+      <ButtonGroup />
+
+        {nodes.map((row, rowIndex) => {
           return <div style={{display: 'flex', flexDirection: 'row'}}>
-            {row.map((col, colIndex) => this.nodes[rowIndex][colIndex].nodeElement)}
+            {row.map((col, colIndex) => nodes[rowIndex][colIndex][1])}
           </div>
         })}
-        <button onClick={this.test}> TEST</button>
-      </div>
-    )
-  }
+    </div>
+  )
+
 }
 
 export default PathFinding

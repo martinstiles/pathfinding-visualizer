@@ -1,5 +1,6 @@
 import React from 'react';
 import PathFinding from './views/pathFinding/pathFinding.js'
+import Navbar from './views/navbar'
 
 function App() {
 
@@ -9,20 +10,14 @@ function App() {
     marginLeft: 'auto',
     marginRight: 'auto',
   }
-  const test = () => {
-    console.log('oppdaterer det?')
-  }
 
   return (
     <>
 
       <div style={algorithmStyle}>
-        <h1>
-          HERE COMES THE BUTTONS :D
-        </h1>
+        <Navbar />
         <PathFinding />
       </div>
-      <button onClick={test}> </button>
     </>
   );
 }
