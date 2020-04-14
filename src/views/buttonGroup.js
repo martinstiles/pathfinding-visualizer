@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, FormControl, InputLabel, Select, MenuItem, Menu, Link } from '@material-ui/core'
 import ReplayIcon from '@material-ui/icons/Replay'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
@@ -23,16 +23,28 @@ const ButtonGroup = (props) => {
   const isEmpty = props.runState === 'empty'
   const isCustomized = props.runState === 'customized'
   const isRunning = props.runState === 'running'
+  const isFinished = props.runState === 'finished'
 
-  const [algorithm, setAlgorithm] = React.useState('')
+  // ALGORITHM SELECT
+  const [algorithm, setAlgorithm] = useState('')
   const handleAlgorithmChange = (event) => {
-    setAlgorithm(event.target.value);
+    setAlgorithm(event.target.value)
+    //props.setAlgorithmInParent(event.target.value)
+    console.log(event.target.value)
   }
+
+  // SPEED SELECT
   const [speed, setSpeed] = React.useState('fast')
   const handleSpeedChange = (event) => {
     setSpeed(event.target.value);
   }
-  // material:
+
+  // PLAY BUTTON
+  const handlePlayClick = () => {
+    props.runAlgorithm(algorithm)
+  }
+
+  // material UI:
   const [anchorEl, setAnchorEl] = React.useState(null)
   const handleMoreClose = () => { setAnchorEl(null) }
   const handleMoreClick = (event) => { setAnchorEl(event.currentTarget) }
@@ -47,7 +59,8 @@ const ButtonGroup = (props) => {
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
           <MenuItem value={'aStar'}>A*</MenuItem>
           <MenuItem value={'bestFist'}>Best first (greedy)</MenuItem>
-          <MenuItem value={'breadthFirst'}>BreadthFirst</MenuItem>
+          <MenuItem value={'breadthFirst'}>Breadth First</MenuItem>
+          <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
         </Select>
       </FormControl>
 
@@ -63,16 +76,17 @@ const ButtonGroup = (props) => {
       </FormControl>
 
       <Button
-        style={{marginLeft: '2em', color: 'black', backgroundColor: algorithm !== '' ? '#63C132' : 'gray'}} 
+        style={{marginLeft: '2em', color: 'black', backgroundColor: algorithm === '' || isRunning || isFinished ? 'gray' : '#63C132'}} 
         ariant="contained"
-        disabled={algorithm === '' || isRunning}>
+        disabled={algorithm === '' || isRunning}
+        onClick={handlePlayClick}>
         <PlayArrowIcon />
       </Button>
       <Button
-        style={{marginLeft: '1em', color: 'black', backgroundColor: isCustomized ? '#cf2e2e' : 'gray'}}
+        style={{marginLeft: '1em', color: 'black', backgroundColor: isEmpty ? 'gray' : '#cf2e2e'}}
         variant="contained"
         disabled={isEmpty}
-        onClick={props.resetNodes}>
+        onClick={isCustomized ? props.resetNodes : props.clearPath}>
         { isEmpty || isCustomized ? <HighlightOffIcon /> : <ReplayIcon /> }
       </Button>
       </div>

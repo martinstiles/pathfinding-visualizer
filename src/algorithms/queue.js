@@ -1,5 +1,5 @@
 // sorted queue with shortest distance and earliest push first
-class Queue {
+export class Queue {
   constructor() {
     this.array = []
   }
@@ -18,6 +18,9 @@ class Queue {
     }
     if (!added) this.array.push(elem)
   }
+  clear = () => {
+    this.array = []
+  }
 }
 
-export default Queue
+//export default Queue

@@ -6,6 +6,7 @@ const typeToColorMap = {
   goal: '#cf2e2e',
   wall: `rgb(${[220,220,220]})`,
   visited: 'blue',
+  shortestPath: 'yellow',
   unvisited: ''
 }
 
@@ -20,11 +21,9 @@ const Node = (props) => {
   }
   
   const handleMakeWall = () => {
-    if (props.type === 'unvisited') {
-      updateType('wall')
-      setInternalMouseDown(true)
-      render()
-    }
+    if (props.type === 'unvisited') updateType('wall')
+    else if (props.type === 'wall') updateType('unvisited')
+    setInternalMouseDown(true)
   }
 
   const style = {
@@ -32,7 +31,7 @@ const Node = (props) => {
     width: '1.5em',
     border: `1px solid rgb(${[220,220,220]})`,
     background: typeToColorMap[type],
-    ...(internalMouseDown && {transform: `scale(${1.3})`})
+    ...(internalMouseDown && type === 'wall' && {transform: `scale(${1.3})`})
   }
 
   const onMouseDown = () => {
@@ -57,7 +56,6 @@ const Node = (props) => {
     setInternalMouseDown(false) // to stop scale(1.3)
     props.hooks.setIsMouseDownInArray(false) // To prevent mouseUp outside of grid bug
   }
-
   return (
     <div key={props.key} style={style} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}/>
   )

@@ -1,5 +1,5 @@
 // UNIQUE keys for every render, otherwise resetting wont work because the hook in each node
-var key = 0
+
 const getInitialNodes = () => {
   const numRows = 21
   const numCols = 50
@@ -13,10 +13,9 @@ const getInitialNodes = () => {
       var type = 'unvisited'
       if (row === 10 && col === 4) {type = 'source'}
       if (row === 10 && col === 44) {type = 'goal'}
-      currentRow.push([
-        { type, key, rowIndex, colIndex }
-      ])
-      key++
+      currentRow.push(
+        { type, rowIndex, colIndex }
+      )
     }
     nodes.push(currentRow)
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PathFinding from './views/pathFinding/pathFinding.js'
-import Navbar from './views/navbar'
+import Header from './views/header.js'
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
     <>
 
       <div style={algorithmStyle}>
-        <Navbar />
+        <Header />
         <PathFinding />
       </div>
     </>
