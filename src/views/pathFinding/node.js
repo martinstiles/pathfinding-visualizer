@@ -5,8 +5,8 @@ const typeToColorMap = {
   source: '#63C132',
   goal: '#cf2e2e',
   wall: `rgb(${[220,220,220]})`,
-  visited: 'blue',
-  shortestPath: 'yellow',
+  visited: '#2d749a',
+  shortestPath: '#ffff60',
   unvisited: ''
 }
 
@@ -27,8 +27,8 @@ const Node = (props) => {
   }
 
   const style = {
-    height: '1.5em',
-    width: '1.5em',
+    height: '2.5em',
+    width: '2.5em',
     border: `1px solid rgb(${[220,220,220]})`,
     background: typeToColorMap[type],
     ...(internalMouseDown && type === 'wall' && {transform: `scale(${1.3})`})

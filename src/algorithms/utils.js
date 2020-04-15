@@ -1,4 +1,4 @@
-/*export const getNeighboors = (nodes, node) => {
+  export const getNeighboors = (nodes, node) => {
   const neighboors = []
   const row = node.rowIndex
   const col = node.colIndex
@@ -10,8 +10,15 @@
       neighboors.push(upNode) 
     }
   }
+  // RIGHT 49
+  if (col < 20) {
+    const rightNode = nodes[row][col + 1]
+    if (rightNode.type === 'unvisited' || rightNode.type === 'goal') {
+      neighboors.push(rightNode) 
+    }
+  }
   // DOWN
-  if (row < 20) {
+  if (row < 10) {
     const downNode = nodes[row + 1][col]
     if (downNode.type === 'unvisited' || downNode.type === 'goal') {
       neighboors.push(downNode) 
@@ -24,13 +31,6 @@
       neighboors.push(leftNode) 
     }
   }
-  // RIGHT
-  if (col < 49) {
-    const rightNode = nodes[row][col + 1]
-    if (rightNode.type === 'unvisited' || rightNode.type === 'goal') {
-      neighboors.push(rightNode) 
-    }
-  }
 
   return neighboors
 }
@@ -39,12 +39,12 @@ export const getManDistance = (u, v) => {
   return Math.sqrt( (u.rowIndex - v.rowIndex)**2 + (u.colIndex - v.colIndex)**2)
 }
 
-
+/*
 const test = [{x: 1}, {x: 2}]
 const a = test[0]
 a.x = 3
 console.log(test)
-*/
+
 
 const test = () => {
   var t = 'hei'
@@ -67,4 +67,4 @@ const test = () => {
     i++
   }
 }
-test()
+test() */

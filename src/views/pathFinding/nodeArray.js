@@ -3,17 +3,25 @@ import Node from './node.js'
 import ButtonGroup from '../buttonGroup.js'
 import getInitialNodes from './initialNodes.js'
 import { Dijkstra } from '../../algorithms/dijkstra.js'
-import { render } from '@testing-library/react'
+//import { AStar } from '../../algorithms/aStar.js'
 
 const algorithmMap = {
   dijkstra: Dijkstra
 }
+const speedLabelToSpeedMap = {
+  slow: 200,
+  medium: 100,
+  fast: 60
+}
+
 var testKey = 0
 const NodeArray = () => {
   const [nodes, setNodes] = useState([])
   const [isMouseDownInArray, setIsMouseDownInArray] = useState(false)
   const [runState, setRunState] = useState('empty') // empty, cusomized, running, finished
-  //const [algorithm, setAlgorithm] = useState('') // IKKE NØDVENDIG? -> Kan holdes i ButtonGroup -> Samme med speed
+  //const [algorithm, setAlgorithm] = useState('') // IKKE NØDVENDIG? -> Kan holdes i ButtonGroup -> Samme med speed -> Nei
+  const [speed, setSpeed] = useState('medium')
+  const [updateHook, setUpdateHook] = useState(false)
 
   const hooks = {
     isMouseDownInArray,
@@ -39,20 +47,16 @@ const NodeArray = () => {
     setNodes(initialNodes)
     setRunState('empty')
   }
-  //console.log(nodes)
-  const test2 = () => {
-    setRunState('test')
-    render()
-  }
 
   const runAlgorithm = (algorithm) => {
     // const algorithmToRun = algorithmMap[algorithm]
-    // algorithmToRun(nodes, nodes[10][4])
+    setRunState('running')
+    const currentSpeed = speedLabelToSpeedMap[speed]
     if (algorithm === 'dijkstra') {
-      setRunState('running')
-      Dijkstra(nodes, nodes[10][4])
+      Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState)
+    } else if (algorithm) {
+      //AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState)
     }
-    setRunState('finished')
   }
 
   const clearPath = () => {
@@ -73,7 +77,7 @@ const NodeArray = () => {
   //console.log('rendered')
   return (
     <div>
-      <ButtonGroup runState={runState} runAlgorithm={runAlgorithm} resetNodes={resetNodes} clearPath={clearPath} />
+      <ButtonGroup runState={runState} runAlgorithm={runAlgorithm} setSpeed={setSpeed} resetNodes={resetNodes} clearPath={clearPath} />
       {nodes.map((row, rowIndex) => {
         return <div key={rowIndex} style={{display: 'flex', flexDirection: 'row'}}>
           {row.map((node, colIndex) =>
@@ -87,7 +91,6 @@ const NodeArray = () => {
           )}
         </div>
       })}
-      <button onClick={test2}>TEST2</button>
     </div>
   )
 }

@@ -23,4 +23,27 @@ export class Queue {
   }
 }
 
-//export default Queue
+export class aStarQueue {
+  // sorted queue with shortest distance and earliest push first
+  constructor() {
+    this.array = []
+  }
+
+  getFirstElem = () => {
+    return this.array.shift()
+  }
+  add = (elem) => {
+    var added = false
+    for (let i = 0; i < this.array.length; i++) {
+      if (elem.dist < this.array[i].dist) {
+         this.array.splice(i, 0, elem)
+        added = true
+        break
+      }
+    }
+    if (!added) this.array.push(elem)
+  }
+  clear = () => {
+    this.array = []
+  }
+}

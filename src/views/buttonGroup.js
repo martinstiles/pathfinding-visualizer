@@ -34,9 +34,10 @@ const ButtonGroup = (props) => {
   }
 
   // SPEED SELECT
-  const [speed, setSpeed] = React.useState('fast')
+  const [speed, setSpeed] = useState('medium')
   const handleSpeedChange = (event) => {
-    setSpeed(event.target.value);
+    setSpeed(event.target.value)
+    props.setSpeed(event.target.value)
   }
 
   // PLAY BUTTON
@@ -45,7 +46,7 @@ const ButtonGroup = (props) => {
   }
 
   // material UI:
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const handleMoreClose = () => { setAnchorEl(null) }
   const handleMoreClick = (event) => { setAnchorEl(event.currentTarget) }
 
@@ -57,9 +58,6 @@ const ButtonGroup = (props) => {
           <div style={{color: 'black', fontStyle: 'italic'}}>Select algorithm</div>
         </InputLabel>
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
-          <MenuItem value={'aStar'}>A*</MenuItem>
-          <MenuItem value={'bestFist'}>Best first (greedy)</MenuItem>
-          <MenuItem value={'breadthFirst'}>Breadth First</MenuItem>
           <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
         </Select>
       </FormControl>
@@ -79,23 +77,26 @@ const ButtonGroup = (props) => {
         style={{marginLeft: '2em', color: 'black', backgroundColor: algorithm === '' || isRunning || isFinished ? 'gray' : '#63C132'}} 
         ariant="contained"
         disabled={algorithm === '' || isRunning}
-        onClick={handlePlayClick}>
+        onClick={handlePlayClick}
+      >
         <PlayArrowIcon />
       </Button>
       <Button
-        style={{marginLeft: '1em', color: 'black', backgroundColor: isEmpty ? 'gray' : '#cf2e2e'}}
+        style={{marginLeft: '1em', color: 'black', backgroundColor: isEmpty || isRunning ? 'gray' : '#cf2e2e'}}
         variant="contained"
-        disabled={isEmpty}
-        onClick={isCustomized ? props.resetNodes : props.clearPath}>
+        disabled={isEmpty || isRunning}
+        onClick={isCustomized ? props.resetNodes : props.clearPath}
+      >
         { isEmpty || isCustomized ? <HighlightOffIcon /> : <ReplayIcon /> }
       </Button>
       </div>
+
       <div style={{display: 'flex', flexDirection: 'row', fontSize: '3em'}}>
         <Button style={{fontSize: '1em', color: 'white', margin: 0}} aria-haspopup="true" onClick={handleMoreClick}>
           <ViewHeadlineIcon style={{fontSize: '0.9em'}} />
         </Button>
         <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMoreClose}>
-          <MenuItem onClick={handleMoreClose}> <Link href='' style={{color: 'black'}}>
+          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' style={{color: 'black'}}>
             Sorting Algorithms
           </Link></MenuItem>
           <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://github.com/martinstiles/algorithm-visualizer' style={{color: 'black'}}>
@@ -110,6 +111,9 @@ const ButtonGroup = (props) => {
   )
 }
 
-// <GitHubIcon style={{marginLeft: '5px'}} fontSize={'small'} />
-// <HomeIcon style={{marginLeft: '5px'}}/>
+
+//<MenuItem value={'aStar'}>A*</MenuItem>
+//<MenuItem value={'bestFist'}>Best first (greedy)</MenuItem>
+//<MenuItem value={'breadthFirst'}>Breadth First</MenuItem>
+
 export default ButtonGroup
