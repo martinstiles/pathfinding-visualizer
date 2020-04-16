@@ -1,6 +1,6 @@
 {
   "name": "algorithm-visualizer",
-  "homepage": "http://martinstiles.github.io/algorithm-visualizer",
+  "homepage": "http://martinstiles.github.io/pathfinding-visualizer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

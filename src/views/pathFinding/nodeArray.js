@@ -3,7 +3,7 @@ import Node from './node.js'
 import ButtonGroup from '../buttonGroup.js'
 import getInitialNodes from './initialNodes.js'
 import { Dijkstra } from '../../algorithms/dijkstra.js'
-//import { AStar } from '../../algorithms/aStar.js'
+import { AStar } from '../../algorithms/aStar.js'
 
 const algorithmMap = {
   dijkstra: Dijkstra
@@ -55,7 +55,7 @@ const NodeArray = () => {
     if (algorithm === 'dijkstra') {
       Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState)
     } else if (algorithm) {
-      //AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState)
+      AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState)
     }
   }
 

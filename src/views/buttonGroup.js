@@ -58,6 +58,7 @@ const ButtonGroup = (props) => {
           <div style={{color: 'black', fontStyle: 'italic'}}>Select algorithm</div>
         </InputLabel>
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
+          <MenuItem value={'aStar'}>A*</MenuItem>
           <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
         </Select>
       </FormControl>
