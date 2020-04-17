@@ -19,14 +19,16 @@ const paper = {
 
 const TransitionsModal = () => {
 
-  const [open, setOpen] = useState(false)
+  const visited = localStorage.getItem('visited')
+  const [open, setOpen] = useState(visited ? false : true)
 
   const handleOpen = () => {
     setOpen(true);
   }
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(false)
+    localStorage.setItem('visited', true)
   }
 
   return (
@@ -46,7 +48,7 @@ const TransitionsModal = () => {
       >
         <Fade in={open}>
           <div style={paper}>
-            <h2 > Welcome to my Pathfinding visualizer</h2>
+            <h2 > Welcome to my Pathfinding Visualizer</h2>
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <p style={{color: '#63C132'}}>Green cell&nbsp;</p>
               <p> - start node </p>
