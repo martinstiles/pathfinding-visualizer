@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Button, FormControl, InputLabel, Select, MenuItem, Menu, Link } from '@material-ui/core'
+import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import ReplayIcon from '@material-ui/icons/Replay'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
-import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline'
+import TransitionModal from './modal.js'
+import MoreMenu from './moreMenu.js'
 
 const ButtonGroup = (props) => {
   const style = {
@@ -14,7 +15,7 @@ const ButtonGroup = (props) => {
   }
 
   const selectStyle = {
-    backgroundColor: '#FFE19C', //'#A0D2DB', //`rgb(${[220,220,220]})`
+    backgroundColor: '#FFE19C',
     minWidth: '12em',
     textAlign: 'left'
   }
@@ -29,7 +30,6 @@ const ButtonGroup = (props) => {
   const [algorithm, setAlgorithm] = useState('')
   const handleAlgorithmChange = (event) => {
     setAlgorithm(event.target.value)
-    //props.setAlgorithmInParent(event.target.value)
     console.log(event.target.value)
   }
 
@@ -45,11 +45,6 @@ const ButtonGroup = (props) => {
     props.runAlgorithm(algorithm)
   }
 
-  // material UI:
-  const [anchorEl, setAnchorEl] = useState(null)
-  const handleMoreClose = () => { setAnchorEl(null) }
-  const handleMoreClick = (event) => { setAnchorEl(event.currentTarget) }
-
   return (
     <div style={style}>
       <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -58,7 +53,6 @@ const ButtonGroup = (props) => {
           <div style={{color: 'black', fontStyle: 'italic'}}>Select algorithm</div>
         </InputLabel>
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
-          <MenuItem value={'aStar'}>A*</MenuItem>
           <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
         </Select>
       </FormControl>
@@ -93,20 +87,8 @@ const ButtonGroup = (props) => {
       </div>
 
       <div style={{display: 'flex', flexDirection: 'row', fontSize: '3em'}}>
-        <Button style={{fontSize: '1em', color: 'white', margin: 0}} aria-haspopup="true" onClick={handleMoreClick}>
-          <ViewHeadlineIcon style={{fontSize: '0.9em'}} />
-        </Button>
-        <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMoreClose}>
-          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' style={{color: 'black'}}>
-            Sorting Algorithms
-          </Link></MenuItem>
-          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://github.com/martinstiles/algorithm-visualizer' style={{color: 'black'}}>
-            Go to repository
-          </Link></MenuItem>
-          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://martinstiles.github.io/website/' style={{color: 'black'}}>
-            Visit my website
-          </Link></MenuItem>
-        </Menu>
+        <TransitionModal />
+        <MoreMenu />
       </div>
     </div>
   )

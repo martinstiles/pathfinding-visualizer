@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Node from './node.js'
-import ButtonGroup from '../buttonGroup.js'
+import ButtonGroup from '../buttonGroup/buttonGroup.js'
 import getInitialNodes from './initialNodes.js'
 import { Dijkstra } from '../../algorithms/dijkstra.js'
 import { AStar } from '../../algorithms/aStar.js'
@@ -14,7 +14,7 @@ const speedLabelToSpeedMap = {
   fast: 60
 }
 
-var testKey = 0
+var key = 0
 const NodeArray = () => {
   const [nodes, setNodes] = useState([])
   const [isMouseDownInArray, setIsMouseDownInArray] = useState(false)
@@ -82,7 +82,7 @@ const NodeArray = () => {
         return <div key={rowIndex} style={{display: 'flex', flexDirection: 'row'}}>
           {row.map((node, colIndex) =>
             <Node
-              key={testKey++}
+              key={key++}
               type={node.type}
               hooks={hooks}
               setTypeInNode={setTypeInNode}
