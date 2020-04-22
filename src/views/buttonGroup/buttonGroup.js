@@ -53,6 +53,7 @@ const ButtonGroup = (props) => {
           <div style={{color: 'black', fontStyle: 'italic'}}>Select algorithm</div>
         </InputLabel>
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
+          
           <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
         </Select>
       </FormControl>
@@ -86,7 +87,7 @@ const ButtonGroup = (props) => {
       </Button>
       </div>
 
-      <div style={{display: 'flex', flexDirection: 'row', fontSize: '3em'}}>
+      <div style={{display: 'flex', flexDirection: 'row', fontSize: '2.65em'}}>
         <TransitionModal />
         <MoreMenu />
       </div>

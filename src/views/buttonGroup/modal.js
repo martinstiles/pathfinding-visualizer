@@ -62,6 +62,13 @@ const TransitionsModal = () => {
             <p> 3. Select algorithm of choice (Currently only Dijkstra :D) </p>
             <p> 4. Select a different speed if you feel like it </p>
             <p> 5. Hit play :)  </p>
+            <div style={{textAlign: 'center'}}>
+              <Button
+                style={{color: `rgb(${[20,20,20]})`, backgroundColor: `rgb(${[220,220,220]})`, fontSize: '0.9em'}}
+                onClick={handleClose}>
+                Let me play already
+              </Button>
+            </div>
           </div>
         </Fade>
       </Modal>

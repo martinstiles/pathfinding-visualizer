@@ -19,6 +19,8 @@ const getHelperNodes = (nodes) => {
   return helperNodes
 }
 
+// TODO: MAKE FUNCTION FOR ADD TO changedNodesInorder
+
 export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
@@ -42,6 +44,14 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState) => {
   while (Q.array.length !== 0) {
     const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
     //console.log(U)
+    const prevType = U.type
+    // OPTION TO ADD YELLOW MARKER FOR DIJKSTRA
+    /*changedNodesInOrder.push({
+      rowIndex: U.rowIndex,
+      colIndex: U.colIndex,
+      type: 'test'
+    })*/
+
     const neighboors = getNeighboors(helperNodes, U)
 
     for (let i = 0; i < neighboors.length; i++) {
@@ -59,14 +69,19 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState) => {
         V.dist = alt
         V.prev = [U.rowIndex, U.colIndex] // We keep track of index instead of node for memory purposes -> Becomes a long chain
       }
-      changedNodesInOrder.push(
+      /*changedNodesInOrder.push(
         {
           rowIndex: V.rowIndex,
           colIndex: V.colIndex,
           type: 'visited'
         }
-      )
+      )*/
     }
+    changedNodesInOrder.push({
+      rowIndex: U.rowIndex,
+      colIndex: U.colIndex,
+      type: prevType
+    })
   }
 
   if (goalNode) {
