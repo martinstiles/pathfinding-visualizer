@@ -22,6 +22,7 @@ const NodeArray = () => {
   //const [algorithm, setAlgorithm] = useState('') // IKKE NØDVENDIG? -> Kan holdes i ButtonGroup -> Samme med speed -> Nei
   const [speed, setSpeed] = useState('medium')
   const [updateHook, setUpdateHook] = useState(false)
+  const [nodesVisited, setNodesVisited] = useState(0)
 
   const hooks = {
     isMouseDownInArray,
@@ -53,7 +54,7 @@ const NodeArray = () => {
     setRunState('running')
     const currentSpeed = speedLabelToSpeedMap[speed]
     if (algorithm === 'dijkstra') {
-      Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState)
+      Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
     } else if (algorithm) {
       AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState)
     }
@@ -91,6 +92,7 @@ const NodeArray = () => {
           )}
         </div>
       })}
+      
     </div>
   )
 }

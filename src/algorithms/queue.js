@@ -1,4 +1,4 @@
-// sorted queue with shortest distance and earliest push first
+// sorted queue with shortest distance, and then earliest add, first in list
 export class Queue {
   constructor() {
     this.array = []

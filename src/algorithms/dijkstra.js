@@ -21,10 +21,10 @@ const getHelperNodes = (nodes) => {
 
 // TODO: MAKE FUNCTION FOR ADD TO changedNodesInorder
 
-export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState) => {
+export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
-
+  var nodesVisited = 0
 
   const Q = new Queue()
 
@@ -51,6 +51,7 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState) => {
       colIndex: U.colIndex,
       type: 'test'
     })*/
+    nodesVisited++
 
     const neighboors = getNeighboors(helperNodes, U)
 
@@ -113,6 +114,7 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState) => {
   })
   setTimeout(() => {
     setRunState('finished')
+    setNodesVisited(nodesVisited)
   }, speed*i)
 
   const foundString = goalNode ? 'found' : 'not found'

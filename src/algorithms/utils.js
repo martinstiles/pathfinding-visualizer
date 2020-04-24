@@ -39,6 +39,24 @@ export const getManDistance = (u, v) => {
   return Math.sqrt( (u.rowIndex - v.rowIndex)**2 + (u.colIndex - v.colIndex)**2)
 }
 
+export const getHelperNodes = (nodes) => {
+  const helperNodes = []
+  nodes.map((row) => {
+    const helperRow = []
+    row.map((node) => {
+        helperRow.push(
+          {
+            type: node.type,
+            rowIndex: node.rowIndex,
+            colIndex: node.colIndex
+          }
+        )
+    })
+    helperNodes.push(helperRow)
+  })
+  return helperNodes
+}
+
 /*
 const test = [{x: 1}, {x: 2}]
 const a = test[0]

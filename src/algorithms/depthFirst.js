@@ -1,8 +1,8 @@
 import { Queue } from './queue.js'
 import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
 
-export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState) => {
-  console.log('ASTAR STARTED')
+export const AStar = (nodes, source, speed, setUpdateHook, setRunState) => {
+  console.log('DEPTH FIRST STARTED')
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -20,41 +20,12 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState) =>
   helperSource.type = 'source'
   Q.add(helperSource)
 
-  var helperGoal = helperNodes[goal.rowIndex][goal.colIndex]
+  var goalNode = undefined // tracking if goal is found
 
-  var goalFound = false // tracking if goal is found
+    // HERE IT SHOULD RUN
 
-  while (Q.array.length !== 0) {
-    const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
-    if (U.type !== 'source') {
-      console.log(Q.array)
-      changedNodesInOrder.push(
-        {
-          rowIndex: U.rowIndex,
-          colIndex: U.colIndex,
-          type: 'visited'
-        }
-      )
-    }
-
-    const neighboors = getNeighboors(helperNodes, U)
-    for (let i = 0; i < neighboors.length; i++) {
-      const V = neighboors[i]
-      if (V.type === 'goal') {
-        goalFound = true
-        helperGoal.prev = [U.rowIndex, U.colIndex]
-        Q.clear()
-        break
-      }
-      V.type = 'visited'
-      V.dist = getManDistance(helperSource, V) + getManDistance(V, helperGoal) // HEURISTIC + DISTANCE TO GOAL
-      V.prev = [U.rowIndex, U.colIndex]
-      Q.add(V)
-    }
-  }
-
-  if (goalFound) {
-    var shortestPathNode = helperNodes[helperGoal.prev[0]][helperGoal.prev[1]]
+  if (goalNode) {
+    var shortestPathNode = helperNodes[goalNode.prev[0]][goalNode.prev[1]]
     while (shortestPathNode.prev) {
       shortestPathNode.type = 'shortestPath'
       changedNodesInOrder.push(
