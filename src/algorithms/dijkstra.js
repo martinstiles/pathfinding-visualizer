@@ -1,4 +1,5 @@
 import { Queue } from './queue.js'
+import { visualize } from './visualize'
 import { getNeighboors, getManDistance } from './utils.js'
 
 const getHelperNodes = (nodes) => {
@@ -24,7 +25,6 @@ const getHelperNodes = (nodes) => {
 export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
-  var nodesVisited = 0
 
   const Q = new Queue()
 
@@ -51,7 +51,6 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
       colIndex: U.colIndex,
       type: 'test'
     })*/
-    nodesVisited++
 
     const neighboors = getNeighboors(helperNodes, U)
 
@@ -100,22 +99,7 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
     }
   }
 
-  // VISUALIZE:
-  var i = 1
-  var update = true
-  changedNodesInOrder.map((helperNode) => {
-    setTimeout(() => {
-      const node = nodes[helperNode.rowIndex][helperNode.colIndex]
-      node.type = helperNode.type
-      setUpdateHook(update) // this has to be done to make the parent component rerender, thus displaying the updates
-      update = !update
-    }, speed*i)
-    i++
-  })
-  setTimeout(() => {
-    setRunState('finished')
-    setNodesVisited(nodesVisited)
-  }, speed*i)
+  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
 
   const foundString = goalNode ? 'found' : 'not found'
   console.log('Dijkstra finished: Goal ' + foundString)

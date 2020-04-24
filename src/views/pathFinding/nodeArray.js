@@ -56,7 +56,7 @@ const NodeArray = () => {
     if (algorithm === 'dijkstra') {
       Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
     } else if (algorithm) {
-      AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState)
+      AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
     }
   }
 
@@ -77,7 +77,7 @@ const NodeArray = () => {
   // setAlgorithmInParent={setAlgorithm}
   //console.log('rendered')
   return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <ButtonGroup runState={runState} runAlgorithm={runAlgorithm} setSpeed={setSpeed} resetNodes={resetNodes} clearPath={clearPath} />
       {nodes.map((row, rowIndex) => {
         return <div key={rowIndex} style={{display: 'flex', flexDirection: 'row'}}>
@@ -92,7 +92,7 @@ const NodeArray = () => {
           )}
         </div>
       })}
-      
+      <h1> Nodes visited: {nodesVisited || '--'} </h1>
     </div>
   )
 }

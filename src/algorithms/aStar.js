@@ -1,7 +1,8 @@
 import { Queue } from './queue.js'
+import { visualize } from './visualize'
 import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
 
-export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState) => {
+export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, setNodesVisited) => {
   console.log('ASTAR STARTED')
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
@@ -68,21 +69,7 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState) =>
     }
   }
 
-  // VISUALIZE:
-  var i = 1
-  var update = true
-  changedNodesInOrder.map((helperNode) => {
-    setTimeout(() => {
-      const node = nodes[helperNode.rowIndex][helperNode.colIndex]
-      node.type = helperNode.type
-      setUpdateHook(update) // this has to be done to make the parent component rerender, thus displaying the updates
-      update = !update
-    }, speed*i)
-    i++
-  })
-  setTimeout(() => {
-    setRunState('finished')
-  }, speed*i)
+  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
 
   const foundString = goalFound ? 'found' : 'not found'
   console.log('A* finished: Goal ' + foundString)
