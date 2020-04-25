@@ -1,6 +1,6 @@
 import { Queue } from './queue.js'
 import { visualize } from './visualize'
-import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
+import { getNeighboors, getHelperNodes } from './utils.js'
 
 export const DepthFirst = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
   const changedNodesInOrder = []

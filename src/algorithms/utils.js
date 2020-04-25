@@ -57,32 +57,3 @@ export const getHelperNodes = (nodes) => {
   return helperNodes
 }
 
-/*
-const test = [{x: 1}, {x: 2}]
-const a = test[0]
-a.x = 3
-console.log(test)
-
-
-const test = () => {
-  var t = 'hei'
-  var i = 1
-  for(var x = 0; x < 5; x++) {
-    (function() {
-      setTimeout(function() {
-        console.log(t)
-        t = 'hade'
-      }, 1000*i)
-    }(i))
-    i++
-  }
-  for(var x = 0; x < 5; x++) {
-    (function() {
-      setTimeout(function() {
-        console.log(t)
-      }, 1000*i)
-    }(i))
-    i++
-  }
-}
-test() */

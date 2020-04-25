@@ -1,8 +1,8 @@
 import { Queue } from './queue.js'
 import { visualize } from './visualize'
-import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
+import { getNeighboors, getHelperNodes } from './utils.js'
 
-export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
+export const BreadthFirst = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -45,12 +45,8 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
         break
       }
       V.type = 'visited'
+      V.prev = [U.rowIndex, U.colIndex]
       Q.add(V)
-      const alt = U.dist + getManDistance(U, V)
-      if (alt < V.dist) {
-        V.dist = alt
-        V.prev = [U.rowIndex, U.colIndex] // We keep track of index instead of node for memory purposes -> Becomes a long chain
-      }
     }
   }
 

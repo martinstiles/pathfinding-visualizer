@@ -2,7 +2,7 @@ import { Queue } from './queue.js'
 import { visualize } from './visualize'
 import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
 
-export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
+export const BestFirst = (nodes, source, goal, speed, setUpdateHook, setRunState, setNodesVisited) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -17,14 +17,17 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
   
   const helperSource = helperNodes[source.rowIndex][source.colIndex] // gets source according to original source coordinates
   helperSource.dist = 0
+  helperSource.type = 'source'
   Q.add(helperSource)
 
-  var goalNode = undefined // tracking if goal is found
+  var helperGoal = helperNodes[goal.rowIndex][goal.colIndex]
+
+  var goalFound = false // tracking if goal is found
 
   while (Q.array.length !== 0) {
     const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
     if (U.type !== 'source') {
-      console.log(Q.array)
+      U.type = 'visited'
       changedNodesInOrder.push(
         {
           rowIndex: U.rowIndex,
@@ -35,27 +38,23 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
     }
 
     const neighboors = getNeighboors(helperNodes, U)
-
     for (let i = 0; i < neighboors.length; i++) {
       const V = neighboors[i]
       if (V.type === 'goal') {
-        goalNode = V
-        goalNode.prev = [U.rowIndex, U.colIndex]
+        goalFound = true
+        helperGoal.prev = [U.rowIndex, U.colIndex]
         Q.clear()
         break
       }
-      V.type = 'visited'
+      V.type = 'peeked'
+      V.dist = getManDistance(V, helperGoal) // DISTANCE TO GOAL
+      V.prev = [U.rowIndex, U.colIndex]
       Q.add(V)
-      const alt = U.dist + getManDistance(U, V)
-      if (alt < V.dist) {
-        V.dist = alt
-        V.prev = [U.rowIndex, U.colIndex] // We keep track of index instead of node for memory purposes -> Becomes a long chain
-      }
     }
   }
 
-  if (goalNode) {
-    var shortestPathNode = helperNodes[goalNode.prev[0]][goalNode.prev[1]]
+  if (goalFound) {
+    var shortestPathNode = helperNodes[helperGoal.prev[0]][helperGoal.prev[1]]
     while (shortestPathNode.prev) {
       shortestPathNode.type = 'shortestPath'
       changedNodesInOrder.push(
@@ -69,8 +68,9 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
     }
   }
 
+  console.log('SPEED: ' + speed)
   visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
 
-  const foundString = goalNode ? 'found' : 'not found'
-  console.log('Dijkstra finished: Goal ' + foundString)
+  const foundString = goalFound ? 'found' : 'not found'
+  console.log('A* finished: Goal ' + foundString)
 }

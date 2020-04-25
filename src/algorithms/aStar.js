@@ -28,7 +28,6 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, se
   while (Q.array.length !== 0) {
     const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
     if (U.type !== 'source') {
-      //console.log(Q.array)
       U.type = 'visited'
       changedNodesInOrder.push(
         {

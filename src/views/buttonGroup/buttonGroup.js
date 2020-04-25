@@ -55,6 +55,8 @@ const ButtonGroup = (props) => {
         </InputLabel>
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
           <MenuItem value={'aStar'}>A*</MenuItem>
+          <MenuItem value={'bestFirst'}>Best First</MenuItem>
+          <MenuItem value={'breadthFirst'}>Breadth First</MenuItem>
           <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
           <MenuItem value={'depthFirst'}>Depth First</MenuItem>
         </Select>

@@ -5,10 +5,9 @@ import getInitialNodes from './initialNodes.js'
 import { Dijkstra } from '../../algorithms/dijkstra.js'
 import { AStar } from '../../algorithms/aStar.js'
 import { DepthFirst } from '../../algorithms/depthFirst'
+import { BreadthFirst } from '../../algorithms/breadthFirst'
+import { BestFirst } from '../../algorithms/bestFirst'
 
-const algorithmMap = {
-  dijkstra: Dijkstra
-}
 const speedLabelToSpeedMap = {
   slow: 200,
   medium: 100,
@@ -61,6 +60,10 @@ const NodeArray = () => {
       AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
     } else if(currentAlgorithm === 'depthFirst') {
       DepthFirst(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+    } else if(currentAlgorithm === 'breadthFirst') {
+      BreadthFirst(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+    } else if (currentAlgorithm === 'bestFirst') {
+      BestFirst(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
     }
   }
 
