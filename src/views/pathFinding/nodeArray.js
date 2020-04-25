@@ -4,6 +4,7 @@ import ButtonGroup from '../buttonGroup/buttonGroup.js'
 import getInitialNodes from './initialNodes.js'
 import { Dijkstra } from '../../algorithms/dijkstra.js'
 import { AStar } from '../../algorithms/aStar.js'
+import { DepthFirst } from '../../algorithms/depthFirst'
 
 const algorithmMap = {
   dijkstra: Dijkstra
@@ -11,7 +12,8 @@ const algorithmMap = {
 const speedLabelToSpeedMap = {
   slow: 200,
   medium: 100,
-  fast: 60
+  fast: 60,
+  instant: 0
 }
 
 var key = 0
@@ -19,7 +21,7 @@ const NodeArray = () => {
   const [nodes, setNodes] = useState([])
   const [isMouseDownInArray, setIsMouseDownInArray] = useState(false)
   const [runState, setRunState] = useState('empty') // empty, cusomized, running, finished
-  //const [algorithm, setAlgorithm] = useState('') // IKKE NØDVENDIG? -> Kan holdes i ButtonGroup -> Samme med speed -> Nei
+  const [algorithm, setAlgorithm] = useState('') // IKKE NØDVENDIG? -> Kan holdes i ButtonGroup -> Samme med speed -> Nei
   const [speed, setSpeed] = useState('medium')
   const [updateHook, setUpdateHook] = useState(false)
   const [nodesVisited, setNodesVisited] = useState(0)
@@ -49,14 +51,16 @@ const NodeArray = () => {
     setRunState('empty')
   }
 
-  const runAlgorithm = (algorithm) => {
-    // const algorithmToRun = algorithmMap[algorithm]
+  const runAlgorithm = (currentAlgorithm) => {
+    //console.log('IN NODEARRAY: ' + algorithm)
     setRunState('running')
     const currentSpeed = speedLabelToSpeedMap[speed]
-    if (algorithm === 'dijkstra') {
+    if (currentAlgorithm === 'dijkstra') {
       Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
-    } else if (algorithm) {
+    } else if (currentAlgorithm === 'aStar') {
       AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+    } else if(currentAlgorithm === 'depthFirst') {
+      DepthFirst(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
     }
   }
 
@@ -78,7 +82,7 @@ const NodeArray = () => {
   //console.log('rendered')
   return (
     <div style={{textAlign: 'center'}}>
-      <ButtonGroup runState={runState} runAlgorithm={runAlgorithm} setSpeed={setSpeed} resetNodes={resetNodes} clearPath={clearPath} />
+      <ButtonGroup runState={runState} setAlgorithm={setAlgorithm} runAlgorithm={runAlgorithm} setSpeed={setSpeed} resetNodes={resetNodes} clearPath={clearPath} />
       {nodes.map((row, rowIndex) => {
         return <div key={rowIndex} style={{display: 'flex', flexDirection: 'row'}}>
           {row.map((node, colIndex) =>
@@ -93,6 +97,7 @@ const NodeArray = () => {
         </div>
       })}
       <h1> Nodes visited: {nodesVisited || '--'} </h1>
+      {algorithm === 'depthFirst' && <p> Note: depth first does not find shortest path, it just finds the goal (and might be slightly bugged :D).</p>}
     </div>
   )
 }

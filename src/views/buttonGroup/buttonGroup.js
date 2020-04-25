@@ -29,6 +29,7 @@ const ButtonGroup = (props) => {
   // ALGORITHM SELECT
   const [algorithm, setAlgorithm] = useState('')
   const handleAlgorithmChange = (event) => {
+    props.setAlgorithm(event.target.value)
     setAlgorithm(event.target.value)
     console.log(event.target.value)
   }
@@ -55,6 +56,7 @@ const ButtonGroup = (props) => {
         <Select style={selectStyle} value={algorithm} onChange={handleAlgorithmChange} label="Algorithm" autoWidth={true}>
           <MenuItem value={'aStar'}>A*</MenuItem>
           <MenuItem value={'dijkstra'}>Dijkstra</MenuItem>
+          <MenuItem value={'depthFirst'}>Depth First</MenuItem>
         </Select>
       </FormControl>
 
@@ -66,6 +68,7 @@ const ButtonGroup = (props) => {
           <MenuItem value={'slow'}>Slow</MenuItem>
           <MenuItem value={'medium'}>Medium</MenuItem>
           <MenuItem value={'fast'}>Fast</MenuItem>
+          <MenuItem value={'instant'}>Instant</MenuItem>
         </Select>
       </FormControl>
 

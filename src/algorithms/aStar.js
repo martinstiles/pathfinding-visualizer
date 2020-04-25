@@ -28,7 +28,8 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, se
   while (Q.array.length !== 0) {
     const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
     if (U.type !== 'source') {
-      console.log(Q.array)
+      //console.log(Q.array)
+      U.type = 'visited'
       changedNodesInOrder.push(
         {
           rowIndex: U.rowIndex,
@@ -47,7 +48,7 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, se
         Q.clear()
         break
       }
-      V.type = 'visited'
+      V.type = 'peeked'
       V.dist = getManDistance(helperSource, V) + getManDistance(V, helperGoal) // HEURISTIC + DISTANCE TO GOAL
       V.prev = [U.rowIndex, U.colIndex]
       Q.add(V)
@@ -69,6 +70,7 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, se
     }
   }
 
+  console.log('SPEED: ' + speed)
   visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
 
   const foundString = goalFound ? 'found' : 'not found'

@@ -43,14 +43,16 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
 
   while (Q.array.length !== 0) {
     const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
-    //console.log(U)
-    const prevType = U.type
-    // OPTION TO ADD YELLOW MARKER FOR DIJKSTRA
-    /*changedNodesInOrder.push({
-      rowIndex: U.rowIndex,
-      colIndex: U.colIndex,
-      type: 'test'
-    })*/
+    if (U.type !== 'source') {
+      console.log(Q.array)
+      changedNodesInOrder.push(
+        {
+          rowIndex: U.rowIndex,
+          colIndex: U.colIndex,
+          type: 'visited'
+        }
+      )
+    }
 
     const neighboors = getNeighboors(helperNodes, U)
 
@@ -69,19 +71,7 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
         V.dist = alt
         V.prev = [U.rowIndex, U.colIndex] // We keep track of index instead of node for memory purposes -> Becomes a long chain
       }
-      /*changedNodesInOrder.push(
-        {
-          rowIndex: V.rowIndex,
-          colIndex: V.colIndex,
-          type: 'visited'
-        }
-      )*/
     }
-    changedNodesInOrder.push({
-      rowIndex: U.rowIndex,
-      colIndex: U.colIndex,
-      type: prevType
-    })
   }
 
   if (goalNode) {
