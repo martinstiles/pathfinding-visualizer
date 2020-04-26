@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import { render } from '@testing-library/react'
 
 const typeToColorMap = {
   source: '#63C132',
@@ -11,7 +10,7 @@ const typeToColorMap = {
 }
 
 const Node = (props) => {
-  var [type, setType] = useState(props.type)
+  const [type, setType] = useState(props.type)
   const [internalMouseDown, setInternalMouseDown] = useState(false)
   const runState = props.hooks.runState
 

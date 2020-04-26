@@ -1,5 +1,3 @@
-// UNIQUE keys for every render, otherwise resetting wont work because the hook in each node
-
 const getInitialNodes = () => {
   const numRows = 11 // 21
   const numCols = 21 // 50
