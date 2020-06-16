@@ -23,7 +23,7 @@ const MoreMenu = () => {
             Visit my website
           </Link></MenuItem>
           <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' style={{color: 'black'}}>
-            Sure you want to do this?
+            Free stuff
           </Link></MenuItem>
         </Menu>
     </>
