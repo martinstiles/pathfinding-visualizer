@@ -13,7 +13,7 @@ const MoreMenu = () => {
           <ViewHeadlineIcon style={{fontSize: '0.9em'}} />
         </Button>
         <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMoreClose}>
-          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://martinstiles.github.com/sorting-visualizer' style={{color: 'black'}}>
+          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://martinstiles.github.io/sorting-visualizer/' style={{color: 'black'}}>
             Sorting Algorithms
           </Link></MenuItem>
           <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://github.com/martinstiles/pathfinding-visualizer' style={{color: 'black'}}>
@@ -21,6 +21,9 @@ const MoreMenu = () => {
           </Link></MenuItem>
           <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://martinstiles.github.io/website/' style={{color: 'black'}}>
             Visit my website
+          </Link></MenuItem>
+          <MenuItem onClick={handleMoreClose}> <Link target='_blank' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' style={{color: 'black'}}>
+            Sure you want to do this?
           </Link></MenuItem>
         </Menu>
     </>
