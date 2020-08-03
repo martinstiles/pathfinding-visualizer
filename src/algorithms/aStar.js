@@ -13,6 +13,7 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, se
     row.map((node) => {
       node.dist = 10000
       node.prev = undefined
+      node.currentDistance = 0
     })
   )
   
@@ -48,7 +49,8 @@ export const AStar = (nodes, source, goal, speed, setUpdateHook, setRunState, se
         break
       }
       V.type = 'peeked'
-      V.dist = getManDistance(helperSource, V) + getManDistance(V, helperGoal) // HEURISTIC + DISTANCE TO GOAL
+      V.currentDistance = U.currentDistance + 1
+      V.dist = V.currentDistance + getManDistance(V, helperGoal) // current distance from start to node + distance to goal
       V.prev = [U.rowIndex, U.colIndex]
       Q.add(V)
     }
