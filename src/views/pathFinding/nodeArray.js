@@ -107,7 +107,7 @@ const NodeArray = () => {
           )}
         </div>
       })}
-      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <h1> Nodes expanded: {nodesVisited || '--'} </h1>
         <h1> Nodes in path: {nodesInPath || '--'} </h1>
       </div>
