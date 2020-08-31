@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Node from './node.js'
 import ButtonGroup from '../buttonGroup/buttonGroup.js'
 import getInitialNodes from './initialNodes.js'
@@ -21,7 +21,6 @@ const NodeArray = () => {
   const [runState, setRunState] = useState('empty') // empty, cusomized, running, finished
   const [algorithm, setAlgorithm] = useState('') // IKKE NØDVENDIG? -> Kan holdes i ButtonGroup -> Samme med speed -> Nei
   const [speed, setSpeed] = useState('medium')
-  const [updateHook, setUpdateHook] = useState(false)
   const [nodesVisited, setNodesVisited] = useState(0)
   const [nodesInPath, setNodesInPath] = useState(0)
 
@@ -44,28 +43,38 @@ const NodeArray = () => {
     nodes[row][col].type = type
   }
 
-  const resetNodes = () => {
+  // DOES CALLBACK MAKE ANY DIFFERENCE HERE?
+  // I GUESS THE FUNCTION ISNT MADE EVERY RENDER (WHICH HAPPENS A LOT)
+  // HOWEVER, A CLG INSIDE OF IT NEVER ACTUALLY HAPPENS UNLESS THE FUNCTION IS CALLED (TESTED)
+  const resetNodes = useCallback(() => {
     const initialNodes = getInitialNodes() // clears the grid
     setNodes(initialNodes)
     setRunState('empty')
-  }
+  }, [])
+
+  const labelToAlgorithm = useMemo(() => {
+    return {
+      dijkstra: Dijkstra,
+      aStar: AStar,
+      depthFirst: DepthFirst,
+      breadthFirst: BreadthFirst,
+      bestFirst: BestFirst
+    }
+  }, [])
 
   const runAlgorithm = (currentAlgorithm) => {
-    // TODO: Make a mapping from label to function so you can call const algorithm = labelToAlgorithm[label] and thus:
-    // algorithm(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited, setNodesInPath)
-    setRunState('running')
+    const Algorithm = labelToAlgorithm[currentAlgorithm]
+    const algorithmUsesGoalNode = currentAlgorithm === 'aStar' || currentAlgorithm === 'bestFirst'
     const currentSpeed = speedLabelToSpeedMap[speed]
-    if (currentAlgorithm === 'dijkstra') {
-      Dijkstra(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
-    } else if (currentAlgorithm === 'aStar') {
-      AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
-    } else if(currentAlgorithm === 'depthFirst') {
-      DepthFirst(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
-    } else if(currentAlgorithm === 'breadthFirst') {
-      BreadthFirst(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
-    } else if (currentAlgorithm === 'bestFirst') {
-      BestFirst(nodes, nodes[5][4], nodes[5][16], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
+    setRunState('running')
+    // console.log(currentAlgorithm, 'is running')
+
+    if (algorithmUsesGoalNode) {
+      Algorithm(nodes, nodes[5][4], nodes[5][16], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
+    } else {
+      Algorithm(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
     }
+    
   }
 
   const clearPath = () => {

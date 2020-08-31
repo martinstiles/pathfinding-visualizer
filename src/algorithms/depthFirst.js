@@ -35,6 +35,5 @@ export const DepthFirst = (nodes, source, speed, setRunState, setNodesVisited, s
     }
   }
 
-  console.log('SPEED: ' + speed)
   visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setRunState, setNodesInPath)
 }

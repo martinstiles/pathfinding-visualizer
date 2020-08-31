@@ -3,7 +3,6 @@ import { visualize } from './visualize'
 import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
 
 export const AStar = (nodes, source, goal, speed, setRunState, setNodesVisited, setNodesInPath) => {
-  console.log('ASTAR STARTED')
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -71,6 +70,5 @@ export const AStar = (nodes, source, goal, speed, setRunState, setNodesVisited, 
     }
   }
 
-  console.log('SPEED: ' + speed)
   visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setRunState, setNodesInPath)
 }

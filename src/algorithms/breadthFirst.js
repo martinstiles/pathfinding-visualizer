@@ -24,7 +24,6 @@ export const BreadthFirst = (nodes, source, speed, setRunState, setNodesVisited,
   while (Q.array.length !== 0) {
     const U = Q.getFirstElem() // gets node with shortest distance and removes it from Q
     if (U.type !== 'source') {
-      console.log(Q.array)
       changedNodesInOrder.push(
         {
           rowIndex: U.rowIndex,
