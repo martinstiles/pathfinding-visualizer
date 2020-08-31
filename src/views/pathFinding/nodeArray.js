@@ -14,7 +14,6 @@ const speedLabelToSpeedMap = {
   fast: 60,
   instant: 0
 }
-
 var key = 0
 const NodeArray = () => {
   const [nodes, setNodes] = useState([])
@@ -24,6 +23,7 @@ const NodeArray = () => {
   const [speed, setSpeed] = useState('medium')
   const [updateHook, setUpdateHook] = useState(false)
   const [nodesVisited, setNodesVisited] = useState(0)
+  const [nodesInPath, setNodesInPath] = useState(0)
 
   const hooks = {
     isMouseDownInArray,
@@ -51,19 +51,20 @@ const NodeArray = () => {
   }
 
   const runAlgorithm = (currentAlgorithm) => {
-    //console.log('IN NODEARRAY: ' + algorithm)
+    // TODO: Make a mapping from label to function so you can call const algorithm = labelToAlgorithm[label] and thus:
+    // algorithm(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited, setNodesInPath)
     setRunState('running')
     const currentSpeed = speedLabelToSpeedMap[speed]
     if (currentAlgorithm === 'dijkstra') {
-      Dijkstra(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+      Dijkstra(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
     } else if (currentAlgorithm === 'aStar') {
-      AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+      AStar(nodes, nodes[5][4], nodes[5][16], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
     } else if(currentAlgorithm === 'depthFirst') {
-      DepthFirst(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+      DepthFirst(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
     } else if(currentAlgorithm === 'breadthFirst') {
-      BreadthFirst(nodes, nodes[5][4], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+      BreadthFirst(nodes, nodes[5][4], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
     } else if (currentAlgorithm === 'bestFirst') {
-      BestFirst(nodes, nodes[5][4], nodes[5][16], currentSpeed, setUpdateHook, setRunState, setNodesVisited)
+      BestFirst(nodes, nodes[5][4], nodes[5][16], currentSpeed, setRunState, setNodesVisited, setNodesInPath)
     }
   }
 
@@ -79,10 +80,8 @@ const NodeArray = () => {
       })
     })
     setRunState(isCustomized ? 'customized' : 'empty')
-    console.log('path cleared')
   }
-  // setAlgorithmInParent={setAlgorithm}
-  //console.log('rendered')
+
   return (
     <div style={{textAlign: 'center'}}>
       <ButtonGroup runState={runState} setAlgorithm={setAlgorithm} runAlgorithm={runAlgorithm} setSpeed={setSpeed} resetNodes={resetNodes} clearPath={clearPath} />
@@ -99,8 +98,12 @@ const NodeArray = () => {
           )}
         </div>
       })}
-      <h1> Nodes visited: {nodesVisited || '--'} </h1>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+        <h1> Nodes expanded: {nodesVisited || '--'} </h1>
+        <h1> Nodes in path: {nodesInPath || '--'} </h1>
+      </div>
       {algorithm === 'depthFirst' && <p> Note: depth first does not find shortest path, it just finds the goal (and might be slightly bugged :D).</p>}
+      {algorithm === 'bestFirst' && <p> Note: Best First search is fast, but it's actually not guaranteed to find the <b>shortest</b> path.</p>}
     </div>
   )
 }

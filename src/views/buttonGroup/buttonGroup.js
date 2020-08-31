@@ -31,7 +31,6 @@ const ButtonGroup = (props) => {
   const handleAlgorithmChange = (event) => {
     props.setAlgorithm(event.target.value)
     setAlgorithm(event.target.value)
-    console.log(event.target.value)
   }
 
   // SPEED SELECT

@@ -2,7 +2,7 @@ import { Queue } from './queue.js'
 import { visualize } from './visualize'
 import { getNeighboors, getHelperNodes } from './utils.js'
 
-export const BreadthFirst = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
+export const BreadthFirst = (nodes, source, speed, setRunState, setNodesVisited, setNodesInPath) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -65,8 +65,5 @@ export const BreadthFirst = (nodes, source, speed, setUpdateHook, setRunState, s
     }
   }
 
-  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
-
-  const foundString = goalNode ? 'found' : 'not found'
-  console.log('Dijkstra finished: Goal ' + foundString)
+  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setRunState, setNodesInPath)
 }

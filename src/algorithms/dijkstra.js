@@ -2,7 +2,7 @@ import { Queue } from './queue.js'
 import { visualize } from './visualize'
 import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
 
-export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNodesVisited) => {
+export const Dijkstra = (nodes, source, speed, setRunState, setNodesVisited, setNodesInPath) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -69,8 +69,5 @@ export const Dijkstra = (nodes, source, speed, setUpdateHook, setRunState, setNo
     }
   }
 
-  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
-
-  const foundString = goalNode ? 'found' : 'not found'
-  console.log('Dijkstra finished: Goal ' + foundString)
+  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setRunState, setNodesInPath)
 }

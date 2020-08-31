@@ -2,7 +2,7 @@ import { Queue } from './queue.js'
 import { visualize } from './visualize'
 import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
 
-export const BestFirst = (nodes, source, goal, speed, setUpdateHook, setRunState, setNodesVisited) => {
+export const BestFirst = (nodes, source, goal, speed, setRunState, setNodesVisited, setNodesInPath) => {
   const changedNodesInOrder = []
   const helperNodes = getHelperNodes(nodes)
 
@@ -68,9 +68,5 @@ export const BestFirst = (nodes, source, goal, speed, setUpdateHook, setRunState
     }
   }
 
-  console.log('SPEED: ' + speed)
-  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setUpdateHook, setRunState)
-
-  const foundString = goalFound ? 'found' : 'not found'
-  console.log('A* finished: Goal ' + foundString)
+  visualize(changedNodesInOrder, nodes, speed, setNodesVisited, setRunState, setNodesInPath)
 }
