@@ -35,7 +35,7 @@
   return neighboors
 }
 
-export const getManDistance = (u, v) => {
+export const getEuclidianDistance = (u, v) => {
   return Math.sqrt( (u.rowIndex - v.rowIndex)**2 + (u.colIndex - v.colIndex)**2)
 }
 

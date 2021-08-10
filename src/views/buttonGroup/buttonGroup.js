@@ -76,11 +76,12 @@ const ButtonGroup = (props) => {
       <Button
         style={{marginLeft: '2em', color: 'black', backgroundColor: algorithm === '' || isRunning || isFinished ? 'gray' : '#63C132'}} 
         ariant="contained"
-        disabled={algorithm === '' || isRunning}
+        disabled={algorithm === '' || isRunning || isFinished}
         onClick={handlePlayClick}
       >
         <PlayArrowIcon />
       </Button>
+
       <Button
         style={{marginLeft: '1em', color: 'black', backgroundColor: isEmpty || isRunning ? 'gray' : '#cf2e2e'}}
         variant="contained"

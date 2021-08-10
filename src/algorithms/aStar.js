@@ -1,6 +1,6 @@
 import { Queue } from './queue.js'
 import { visualize } from './visualize'
-import { getNeighboors, getManDistance, getHelperNodes } from './utils.js'
+import { getNeighboors, getEuclidianDistance, getHelperNodes } from './utils.js'
 
 export const AStar = (nodes, source, goal, speed, setRunState, setNodesVisited, setNodesInPath) => {
   const changedNodesInOrder = []
@@ -49,7 +49,7 @@ export const AStar = (nodes, source, goal, speed, setRunState, setNodesVisited, 
       }
       V.type = 'peeked'
       V.currentDistance = U.currentDistance + 1
-      V.dist = V.currentDistance + getManDistance(V, helperGoal) // current distance from start to node + distance to goal
+      V.dist = V.currentDistance + getEuclidianDistance(V, helperGoal) // current distance from start to node + distance to goal
       V.prev = [U.rowIndex, U.colIndex]
       Q.add(V)
     }

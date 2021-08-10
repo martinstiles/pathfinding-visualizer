@@ -18,6 +18,7 @@ export const visualize = (changedNodesInOrder, nodes, speed, setNodesVisited, se
     return
   }
 
+  // not instant
   changedNodesInOrder.map((helperNode) => {
     setTimeout(() => {
       const node = nodes[helperNode.rowIndex][helperNode.colIndex]
