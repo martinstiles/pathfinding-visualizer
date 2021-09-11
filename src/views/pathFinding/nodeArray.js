@@ -112,7 +112,7 @@ const NodeArray = () => {
         <h1> Nodes in path: {nodesInPath || '--'} </h1>
       </div>
       {algorithm === 'depthFirst' && <p> Note: depth first does not find shortest path, it just finds the goal (and might be slightly bugged :D).</p>}
-      {algorithm === 'bestFirst' && <p> Note: Best First search is fast, but it's actually not guaranteed to find the <b>shortest</b> path.</p>}
+      {algorithm === 'bestFirst' && <p> Note: Best First search is not guaranteed to find the <b>shortest</b> path. (It also seems to have a tiny bug?)</p>}
     </div>
   )
 }
